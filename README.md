@@ -33,9 +33,13 @@ Each of them has the format [user_id]\t[answer_ids]\t[recommendation_ids] likes:
 ```
 The reank task (i.e. `rerank.py`) is to rerank the <recommendation_ids> for matching <answer_ids>.
 
-## Train and Evaluate
+## Train, Rerank and Evaluate
 Run this:
 ```sh
-bash eval.sh
+bash rerank.sh
 ```
 You'll get evalation results.
+
+## Add NEW Bandit Method
+1. inherit the base class in `bandit/bandit.py` 
+2. call your created class in `rerank.py`
