@@ -48,7 +48,7 @@ The reank task (i.e. `rerank.py`) is to rerank the <recommendation_ids> for matc
 ## Train, Rerank and Evaluate
 Run this:
 ```sh
-bash rerank.sh
+python rerank.py -train ./exp/dev.data.env -test ./exp/test.data.env -epoch 100 -topk 5
 ```
 You'll get evalation results.
 
