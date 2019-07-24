@@ -74,7 +74,7 @@ def main():
     print('read testing environment', CONFIG.TEST)
     test_ans = defaultdict(list)
     test_arms = defaultdict(list)
-    with open(CONFIG.TRAIN, 'r') as f:
+    with open(CONFIG.TEST, 'r') as f:
         for line in f:
             line = line.rstrip('\n').split('\t')
             user = line[0]
