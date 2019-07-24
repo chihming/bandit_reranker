@@ -1,4 +1,4 @@
-# Bandit As Reranker!
+# Bandit as Reranker!
 
 
 ## Clone this Project
