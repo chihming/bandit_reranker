@@ -19,7 +19,7 @@ Each of them has the format [user_id]\t[item_id]\t[value] likes:
 68889 653 3.000000
 ```
 
-### Generate Environments for Reranking
+### Generate Environments for Reranking (using Graph Embedding)
 Run this:
 ```sh
 bash train.sh
@@ -33,9 +33,13 @@ Each of them has the format [user_id]\t[answer_ids]\t[recommendation_ids] likes:
 ```
 The reank task (i.e. `rerank.py`) is to rerank the <recommendation_ids> for matching <answer_ids>.
 
-## Train and Evaluate
+## Train, Rerank and Evaluate
 Run this:
 ```sh
-bash eval.sh
+bash rerank.sh
 ```
 You'll get evalation results.
+
+## Add NEW Bandit Method
+1. inherit the base class in `bandit/bandit.py` 
+2. call your created class in `rerank.py`
