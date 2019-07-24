@@ -12,6 +12,9 @@ PARSER.add_argument('-train', "--TRAIN", type=str,
 PARSER.add_argument('-test', "--TEST", type=str,
                     default=None,
                     help="test file name")
+PARSER.add_argument('-epoch', "--EPOCH", type=int,
+                    default=1,
+                    help="training epoch")
 PARSER.set_defaults(argument_default=False)
 CONFIG = PARSER.parse_args()
 
@@ -27,7 +30,7 @@ def map_score(answers, recommendations):
 
 def train_bandit(_bandit, train_ans, train_arms, topk=10, epoch=1):
 
-    for _ in range(epoch):
+    for _ in range(CONFIG.EPOCH):
         for user in tqdm(train_ans.keys()):
             answers = train_ans[user][:]
             arms = train_arms[user][:]
@@ -84,7 +87,7 @@ def main():
             test_arms[user] = arms[:]
 
     tested_bandits = [
-        bandit.BaseBandit(observed_arms),
+        bandit.AlwaysFirstBandit(observed_arms),
         bandit.RandomBandit(observed_arms),
         bandit.EpsilonGreedyBandit(observed_arms),
         bandit.EpsilonGreedyBandit(observed_arms, epsilon=0.),
