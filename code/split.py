@@ -81,13 +81,13 @@ def main():
         random.shuffle(items)
         cut_off = int(len(records[user])*CONFIG.TRAIN_RATIO)
         for item in items[:cut_off]:
-            train_data.append('%s %s %f' % (user, item, records[user][item]))
+            train_data.append('u%s i%s %f' % (user, item, records[user][item]))
         if eid % 2 == 0:
             for item in items[cut_off:]:
-                dev_data.append('%s %s %f' % (user, item, records[user][item]))
+                dev_data.append('u%s i%s %f' % (user, item, records[user][item]))
         else:
             for item in items[cut_off:]:
-                test_data.append('%s %s %f' % (user, item, records[user][item]))
+                test_data.append('u%s i%s %f' % (user, item, records[user][item]))
 
     print('Saving train data to %s' % (train_data_path))
     with open(train_data_path, 'w') as f:
