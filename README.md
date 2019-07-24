@@ -6,6 +6,12 @@
 git clone https://github.com/chihming/bandit_reranker
 ```
 
+## Download Necessary Data / Tools
+Run this:
+```sh
+bash download.sh
+```
+
 ## Prepare Data
 Run this:
 ```sh
