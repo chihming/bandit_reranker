@@ -12,8 +12,11 @@ PARSER.add_argument('-train', "--TRAIN", type=str,
 PARSER.add_argument('-test', "--TEST", type=str,
                     default=None,
                     help="test file name")
-PARSER.add_argument('-epoch', "--EPOCH", type=int,
+PARSER.add_argument('-topk', "--TOPK", type=int,
                     default=1,
+                    help="train recommendation on top k")
+PARSER.add_argument('-epoch', "--EPOCH", type=int,
+                    default=100,
                     help="training epoch")
 PARSER.set_defaults(argument_default=False)
 CONFIG = PARSER.parse_args()
@@ -28,10 +31,10 @@ def map_score(answers, recommendations):
     map_score /= len(answers)
     return map_score
 
-def train_bandit(_bandit, train_ans, train_arms, topk=10, epoch=1):
+def train_bandit(_bandit, train_ans, train_arms, topk=1, epoch=1):
 
-    for _ in range(CONFIG.EPOCH):
-        for user in tqdm(train_ans.keys()):
+    for _ in tqdm(list(range(CONFIG.EPOCH))):
+        for user in train_ans.keys():
             answers = train_ans[user][:]
             arms = train_arms[user][:]
             for position in range(min(topk, len(arms))):
