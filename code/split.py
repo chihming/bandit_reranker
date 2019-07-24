@@ -64,7 +64,7 @@ def main():
             records[user][item] = value
     # filter user
     if CONFIG.USER_FILTER:
-        for user in records.keys():
+        for user in list(records.keys()):
             if len(records[user]) < CONFIG.USER_FILTER:
                 records.pop(user, None)
     
@@ -82,7 +82,7 @@ def main():
         cut_off = int(len(records[user])*CONFIG.TRAIN_RATIO)
         for item in items[:cut_off]:
             train_data.append('u%s i%s %f' % (user, item, records[user][item]))
-        if eid % 2 == 0:
+        if eid % 5 != 0:
             for item in items[cut_off:]:
                 dev_data.append('u%s i%s %f' % (user, item, records[user][item]))
         else:
