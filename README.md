@@ -6,10 +6,10 @@
 git clone https://github.com/chihming/bandit_reranker
 ```
 
-## Download Necessary Data / Tools
+## Download Necessary Data / Tools, Setup Python Environment
 Run this:
 ```sh
-bash download.sh
+bash set.sh
 ```
 
 ## Prepare Data
@@ -27,7 +27,7 @@ u11542 i1240 4.000000
 u11542 i1214 5.000000
 ```
 
-### Generate Environments for Reranking (using Graph Embedding)
+### Generate Data Environments for Reranking (using Graph Embedding)
 Run this:
 ```sh
 bash train.sh
