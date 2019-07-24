@@ -11,6 +11,10 @@ Run this:
 ```sh
 bash set.sh
 ```
+To manually activate your python virtual environment, execute:
+```sh
+. ./bandit_env/bin/activate
+```
 
 ## Prepare Data
 Run this:
@@ -35,11 +39,11 @@ bash train.sh
 You'll get two .env data: `exp/dev.data.env` and `exp/test.data.env`.
 Each of them has the format [user_id]\t[answer_ids]\t[recommendation_ids] likes:
 ```
-68889   457 653 356 153 434     457 356 593 589 153 1 364 377 527 434 208 47 50 34 32 185 253 648 367 454
-52509   711 76 135 32 708 736   135 9 637 743 88 694 762 61 12 74 736 260 724 653 839 32 3 102 1210 708
+u51268  i260 i104 i671 i135 i780 i480   i260 i32 i780 i653 i733 i494 i1073 i673 i788 i62 i104 i296 i112 i318 i135 i743 i150 i9 i12 i110
+u29175  i500 i364 i587 i588 i318 i150   i150 i593 i318 i380 i296 i339 i474 i316 i592 i47 i50 i587 i440 i500 i350 i780 i588 i10 i364 i11
 ...   ...   ...
 ```
-The reank task (i.e. `rerank.py`) is to rerank the <recommendation_ids> for matching <answer_ids>.
+The reank task (i.e. `rerank.py`) is to rerank the <recommendation_ids> for matching <answer_ids>. The RL concept here is to select an **arm** from [recommendation_ids], and update its rewards.
 
 ## Train, Rerank and Evaluate
 Run this:
