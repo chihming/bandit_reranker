@@ -19,7 +19,7 @@ Each of them has the format [user_id]\t[item_id]\t[value] likes:
 68889 653 3.000000
 ```
 
-### Generate Environments for Reranking
+### Generate Environments for Reranking (using Graph Embedding)
 Run this:
 ```sh
 bash train.sh
