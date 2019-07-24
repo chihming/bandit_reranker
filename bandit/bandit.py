@@ -28,6 +28,7 @@ class RandomBandit(BaseBandit):
         return "RandomBandit"
 
 
+# FIXME: this implementation is slow
 class EpsilonGreedyBandit(BaseBandit):
     def __init__(self, arms, epsilon=0.1):
         super(EpsilonGreedyBandit, self).__init__(arms)
@@ -36,7 +37,6 @@ class EpsilonGreedyBandit(BaseBandit):
         self.counts = [0. for _ in range(len(arms))]
 
     def pull(self, given_arms=None):
-
         # random case
         if random.random() < self.epsilon:
             if given_arms:
