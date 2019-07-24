@@ -6,6 +6,12 @@
 git clone https://github.com/chihming/bandit_reranker
 ```
 
+## Download Necessary Data / Tools
+Run this:
+```sh
+bash download.sh
+```
+
 ## Prepare Data
 Run this:
 ```sh
@@ -14,9 +20,11 @@ bash prepare.sh
 You'll get train/dev/test data: `exp/train.data` / `exp/dev.data` / `exp/test.data`.
 Each of them has the format [user_id]\t[item_id]\t[value] likes:
 ```
-58146 132 4.000000
-68889 457 5.000000
-68889 653 3.000000
+u68889 i588 4.000000
+u68889 i292 4.000000
+u11542 i1136 4.000000
+u11542 i1240 4.000000
+u11542 i1214 5.000000
 ```
 
 ### Generate Environments for Reranking (using Graph Embedding)
