@@ -14,6 +14,7 @@ cd smore; make; cd ..
 
 # prepare python environment
 virtualenv -p python3 bandit_env
+pip install -r requirements.txt
 . ./bandit_env/bin/activate
 
 # download data
