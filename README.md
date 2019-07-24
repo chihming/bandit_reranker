@@ -17,7 +17,7 @@ Each of them contains <user_id>\t<answer_ids>\t<recommendation_ids> likes:
 52509   711 76 135 32 708 736   135 9 637 743 88 694 762 61 12 74 736 260 724 653 839 32 3 102 1210 708
 ...   ...   ...
 ```
-
+The reank task (i.e. `rerank.py`) is to rerank the <recommendation_ids> for matching <answer_ids>.
 
 ## Train and Evaluate
 ```sh
