@@ -25,18 +25,18 @@ def map_score(answers, recommendations):
     map_score /= len(answers)
     return map_score
 
-def train_bandit(_bandit, train_ans, train_arms, epoch=1):
+def train_bandit(_bandit, train_ans, train_arms, topk=10, epoch=1):
 
     for _ in range(epoch):
         for user in tqdm(train_ans.keys()):
             answers = train_ans[user][:]
             arms = train_arms[user][:]
-            for position in range(len(arms)):
+            for position in range(min(topk, len(arms))):
                 reward = 0.
                 recommended_arm = _bandit.pull(arms)  # recommend an item
                 del arms[arms.index(recommended_arm)] # remove the recommended item from pool
                 if recommended_arm in answers:        # reward
-                    reward = 1./(position+1.)
+                    reward = 1.
                 _bandit.update(recommended_arm, reward)
 
 def eval_bandit(_bandit, test_ans, test_arms):
@@ -54,11 +54,6 @@ def eval_bandit(_bandit, test_ans, test_arms):
     print('MAP:', score/len(test_ans))
 
 def main():
-    tested_bandits = [
-        bandit.BaseBandit,
-        bandit.RandomBandit,
-        bandit.EpsilonGreedyBandit
-    ]
     
     print('read training environment', CONFIG.TRAIN)
     train_ans = defaultdict(list)
@@ -88,8 +83,15 @@ def main():
             test_ans[user] = answer[:]
             test_arms[user] = arms[:]
 
-    for tested_bandit in tested_bandits:
-        _bandit = tested_bandit(observed_arms)
+    tested_bandits = [
+        bandit.BaseBandit(observed_arms),
+        bandit.RandomBandit(observed_arms),
+        bandit.EpsilonGreedyBandit(observed_arms),
+        bandit.EpsilonGreedyBandit(observed_arms, epsilon=0.),
+        bandit.EpsilonGreedyBandit(observed_arms, opt_value=5.)
+    ]
+
+    for _bandit in tested_bandits:
         print('train', _bandit)
         train_bandit(_bandit, train_ans, train_arms)
         print('evaluate', _bandit)

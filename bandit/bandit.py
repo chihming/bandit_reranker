@@ -13,7 +13,7 @@ class BaseBandit(object):
     def update(self, arm, reward):
         pass
 
-    def __str__(self):
+    def __repr__(self):
         return "BaseBandit"
 
 class RandomBandit(BaseBandit):
@@ -24,16 +24,17 @@ class RandomBandit(BaseBandit):
         else:
             return random.choice(self.arms)
 
-    def __str__(self):
+    def __repr__(self):
         return "RandomBandit"
 
 
 # FIXME: this implementation is slow
 class EpsilonGreedyBandit(BaseBandit):
-    def __init__(self, arms, epsilon=0.1):
+    def __init__(self, arms, epsilon=0.1, opt_value=1.):
         super(EpsilonGreedyBandit, self).__init__(arms)
         self.epsilon = epsilon
-        self.values = [0. for _ in range(len(arms))]
+        self.opt_value = opt_value
+        self.values = [self.opt_value for _ in range(len(arms))]
         self.counts = [0. for _ in range(len(arms))]
 
     def pull(self, given_arms=None):
@@ -58,6 +59,7 @@ class EpsilonGreedyBandit(BaseBandit):
         self.counts[arm_index] += 1
         self.values[arm_index] += (reward - self.values[arm]) / self.counts[arm_index]
 
-    def __str__(self):
-        return "EpsilonGreedyBandit"
+    def __repr__(self):
+        return "EpsilonGreedyBandit, epsilon=%.2f, opt_value=%.2f" % (
+            self.epsilon, self.opt_value)
 
