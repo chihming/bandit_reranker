@@ -1,2 +1,6 @@
 # bandit_reranker
-using bandit as reranking method (on-going project)
+```sh
+git clone https://github.com/chihming/bandit_reranker
+bash prepare.sh
+bash eval.sh
+```
