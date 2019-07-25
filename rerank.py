@@ -88,13 +88,14 @@ def main():
             arms = line[2].split(' ')
             test_ans[user] = answer[:]
             test_arms[user] = arms[:]
-
+    
+    # put your bandit here
     tested_bandits = [
         bandit.AlwaysFirstBandit(observed_arms),
         bandit.RandomBandit(observed_arms),
-        bandit.EpsilonGreedyBandit(observed_arms),
-        bandit.EpsilonGreedyBandit(observed_arms, epsilon=0.),
-        bandit.EpsilonGreedyBandit(observed_arms, opt_value=5.)
+        bandit.EpsilonGreedyBandit(observed_arms, epsilon=.2),
+        bandit.EpsilonGreedyBandit(observed_arms, opt_value=5.),
+        bandit.SoftmaxBandit(observed_arms, temperature=.5)
     ]
 
     for _bandit in tested_bandits:
