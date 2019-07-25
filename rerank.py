@@ -31,13 +31,13 @@ def map_score(answers, recommendations):
     map_score /= len(answers)
     return map_score
 
-def train_bandit(_bandit, train_ans, train_arms, topk=1, epoch=1):
+def train_bandit(_bandit, train_ans, train_arms):
 
     for _ in tqdm(list(range(CONFIG.EPOCH))):
         for user in train_ans.keys():
             answers = train_ans[user][:]
             arms = train_arms[user][:]
-            for position in range(min(topk, len(arms))):
+            for position in range(min(CONFIG.TOPK, len(arms))):
                 reward = 0.
                 recommended_arm = _bandit.pull(arms)  # recommend an item
                 del arms[arms.index(recommended_arm)] # remove the recommended item from pool
@@ -52,7 +52,7 @@ def eval_bandit(_bandit, test_ans, test_arms):
         recommendations = []
         answers = test_ans[user][:]
         arms = test_arms[user][:]
-        for position in range(len(arms)):
+        for position in range(min(CONFIG.TOPK, len(arms))):
             recommended_arm = _bandit.pull(arms)  # recommend an item
             del arms[arms.index(recommended_arm)] # remove the recommended item from poo
             recommendations.append(recommended_arm)
