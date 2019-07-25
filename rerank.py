@@ -95,7 +95,8 @@ def main():
         bandit.RandomBandit(observed_arms),
         bandit.EpsilonGreedyBandit(observed_arms, epsilon=.2),
         bandit.EpsilonGreedyBandit(observed_arms, opt_value=5.),
-        bandit.SoftmaxBandit(observed_arms, temperature=.5)
+        bandit.SoftmaxBandit(observed_arms, temperature=.5),
+        bandit.UCB1Bandit(observed_arms)
     ]
 
     for _bandit in tested_bandits:

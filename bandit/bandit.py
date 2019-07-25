@@ -1,4 +1,4 @@
-from math import exp
+from math import exp, log, sqrt
 from collections import defaultdict
 import random
 
@@ -73,7 +73,7 @@ class EpsilonGreedyBandit(BaseBandit):
                 return max_arm
 
     def update(self, arm, reward):
-        self.counts[arm] += 1
+        self.counts[arm] += 1.
         self.values[arm] += (reward - self.values[arm]) / self.counts[arm]
 
     def __repr__(self):
@@ -118,11 +118,57 @@ class SoftmaxBandit(BaseBandit):
             return max_arm
 
     def update(self, arm, reward):
-        self.counts[arm] += 1
+        self.counts[arm] += 1.
         self.values[arm] += (reward - self.values[arm]) / self.counts[arm]
 
     def __repr__(self):
         return "SoftmaxBandit, temperature=%.2f, opt_value=%.2f" % (
             self.temperature, self.opt_value)
+
+
+class UCB1Bandit(BaseBandit):
+    def __init__(self, arms, opt_value=0.):
+        super(UCB1Bandit, self).__init__(arms)
+        self.opt_value = opt_value
+        self.time = 0.
+        self.values = defaultdict(lambda: 0.)
+        self.values.update({arm:self.opt_value for arm in self.arms})
+        self.counts = defaultdict(lambda: 0.)
+        self.counts.update({arm:0. for arm in self.arms})
+
+    def pull(self, given_arms=None):
+        if given_arms:
+            # zero count case
+            given_counts = {arm:self.counts[arm] for arm in given_arms}
+            for arm, count in given_counts.items():
+                if count == 0:
+                    return arm
+            # all non-zero case
+            ucbs = {
+                arm:self.values[arm]+sqrt(2*log(self.time)/self.counts[arm])
+                    for arm in given_counts}
+            max_arm = max(ucbs, key=ucbs.get)
+            return max_arm
+        else:
+            # zero count case
+            for arm, count in self.counts.items():
+                if count == 0:
+                    return arm
+            # all non-zero case
+            ucbs = {
+                arm:self.values[arm]+sqrt(2*log(self.time)/self.counts[arm])
+                    for arm in self.arms}
+            max_arm = max(ucbs, key=ucbs.get)
+            return max_arm
+
+    def update(self, arm, reward):
+        self.counts[arm] += 1.
+        self.time += 1.
+        self.values[arm] += (reward - self.values[arm]) / self.counts[arm]
+
+    def __repr__(self):
+        return "UCB1Bandit"
+
+
 
 
